@@ -30,6 +30,8 @@ public class MCSMKeybindings
     public static final String KEY_STRUCTURE_WEST = "key.mcsm.structure.west";
     public static final String KEY_STRUCTURE_UP = "key.mcsm.structure.up";
     public static final String KEY_STRUCTURE_DOWN = "key.mcsm.structure.down";
+    public static final String KEY_STRUCTURE_POS1 = "key.mcsm.structure.pos1";
+    public static final String KEY_STRUCTURE_POS2 = "key.mcsm.structure.pos2";
     //      Camera
     public static final String KEY_CAMERA_1_SET = "key.mcsm.camera.cam_1.set";
     public static final String KEY_CAMERA_2_SET = "key.mcsm.camera.cam_2.set";
@@ -59,6 +61,9 @@ public class MCSMKeybindings
     public static final KeyMapping STRUCTURE_WEST = new KeyMapping(KEY_STRUCTURE_WEST, KeyConflictContext.IN_GAME, KeyModifier.CONTROL, InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_LEFT,CATEGORY_STRUCTURE);
     public static final KeyMapping STRUCTURE_UP = new KeyMapping(KEY_STRUCTURE_UP, KeyConflictContext.IN_GAME, KeyModifier.CONTROL, InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_PAGE_UP,CATEGORY_STRUCTURE);
     public static final KeyMapping STRUCTURE_DOWN = new KeyMapping(KEY_STRUCTURE_DOWN, KeyConflictContext.IN_GAME, KeyModifier.CONTROL, InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_PAGE_DOWN,CATEGORY_STRUCTURE);
+
+    public static final KeyMapping STRUCTURE_POS1 = new KeyMapping(KEY_STRUCTURE_POS1, KeyConflictContext.IN_GAME, KeyModifier.CONTROL, InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_LEFT_BRACKET,CATEGORY_STRUCTURE);
+    public static final KeyMapping STRUCTURE_POS2 = new KeyMapping(KEY_STRUCTURE_POS2, KeyConflictContext.IN_GAME, KeyModifier.CONTROL, InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_RIGHT_BRACKET,CATEGORY_STRUCTURE);
     //      Camera
     public static final KeyMapping CAM_1_SET = new KeyMapping(KEY_CAMERA_1_SET, KeyConflictContext.IN_GAME, KeyModifier.ALT, InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_1,CATEGORY_CAMERA);
     public static final KeyMapping CAM_2_SET = new KeyMapping(KEY_CAMERA_2_SET, KeyConflictContext.IN_GAME, KeyModifier.ALT, InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_2,CATEGORY_CAMERA);
@@ -90,6 +95,8 @@ public class MCSMKeybindings
         event.register(STRUCTURE_WEST);
         event.register(STRUCTURE_UP);
         event.register(STRUCTURE_DOWN);
+        event.register(STRUCTURE_POS1);
+        event.register(STRUCTURE_POS2);
 
         event.register(CAM_1_SET);
         event.register(CAM_2_SET);
@@ -130,6 +137,46 @@ public class MCSMKeybindings
                 PacketDistributor.SERVER.noArg().send(new StructureUpC2SPacket());
             } else if (STRUCTURE_DOWN.consumeClick()) {
                 PacketDistributor.SERVER.noArg().send(new StructureDownC2SPacket());
+            } else if (STRUCTURE_POS1.consumeClick()) {
+                PacketDistributor.SERVER.noArg().send(new SetPos1C2SPacket());
+            } else if (STRUCTURE_POS2.consumeClick()) {
+                PacketDistributor.SERVER.noArg().send(new SetPos2C2SPacket());
+            } else if (CAM_1_SET.consumeClick()) {
+                PacketDistributor.SERVER.noArg().send(new CameraSetC2SPacket(1));
+            } else if (CAM_2_SET.consumeClick()) {
+                PacketDistributor.SERVER.noArg().send(new CameraSetC2SPacket(2));
+            } else if (CAM_3_SET.consumeClick()) {
+                PacketDistributor.SERVER.noArg().send(new CameraSetC2SPacket(3));
+            } else if (CAM_4_SET.consumeClick()) {
+                PacketDistributor.SERVER.noArg().send(new CameraSetC2SPacket(4));
+            } else if (CAM_5_SET.consumeClick()) {
+                PacketDistributor.SERVER.noArg().send(new CameraSetC2SPacket(5));
+            } else if (CAM_6_SET.consumeClick()) {
+                PacketDistributor.SERVER.noArg().send(new CameraSetC2SPacket(6));
+            } else if (CAM_7_SET.consumeClick()) {
+                PacketDistributor.SERVER.noArg().send(new CameraSetC2SPacket(7));
+            } else if (CAM_8_SET.consumeClick()) {
+                PacketDistributor.SERVER.noArg().send(new CameraSetC2SPacket(8));
+            } else if (CAM_9_SET.consumeClick()) {
+                PacketDistributor.SERVER.noArg().send(new CameraSetC2SPacket(9));
+            } else if (CAM_1_GO.consumeClick()) {
+                PacketDistributor.SERVER.noArg().send(new CameraGoC2SPacket(1));
+            } else if (CAM_2_GO.consumeClick()) {
+                PacketDistributor.SERVER.noArg().send(new CameraGoC2SPacket(2));
+            } else if (CAM_3_GO.consumeClick()) {
+                PacketDistributor.SERVER.noArg().send(new CameraGoC2SPacket(3));
+            } else if (CAM_4_GO.consumeClick()) {
+                PacketDistributor.SERVER.noArg().send(new CameraGoC2SPacket(4));
+            } else if (CAM_5_GO.consumeClick()) {
+                PacketDistributor.SERVER.noArg().send(new CameraGoC2SPacket(5));
+            } else if (CAM_6_GO.consumeClick()) {
+                PacketDistributor.SERVER.noArg().send(new CameraGoC2SPacket(6));
+            } else if (CAM_7_GO.consumeClick()) {
+                PacketDistributor.SERVER.noArg().send(new CameraGoC2SPacket(7));
+            } else if (CAM_8_GO.consumeClick()) {
+                PacketDistributor.SERVER.noArg().send(new CameraGoC2SPacket(8));
+            } else if (CAM_9_GO.consumeClick()) {
+                PacketDistributor.SERVER.noArg().send(new CameraGoC2SPacket(9));
             }
         }
     }

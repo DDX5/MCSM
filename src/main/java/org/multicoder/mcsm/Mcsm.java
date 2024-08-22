@@ -46,6 +46,10 @@ public class Mcsm
             registrar.play(StructureWestC2SPacket.ID,StructureWestC2SPacket::new,handler -> handler.server(PayloadHandlers.getInstance()::HandleData));
             registrar.play(StructureUpC2SPacket.ID,StructureUpC2SPacket::new,handler -> handler.server(PayloadHandlers.getInstance()::HandleData));
             registrar.play(StructureDownC2SPacket.ID,StructureDownC2SPacket::new,handler -> handler.server(PayloadHandlers.getInstance()::HandleData));
+            registrar.play(SetPos1C2SPacket.ID,SetPos1C2SPacket::new,handler -> handler.server(PayloadHandlers.getInstance()::HandleData));
+            registrar.play(SetPos2C2SPacket.ID,SetPos2C2SPacket::new,handler -> handler.server(PayloadHandlers.getInstance()::HandleData));
+            registrar.play(CameraSetC2SPacket.ID,CameraSetC2SPacket::new,handler -> handler.server(PayloadHandlers.getInstance()::HandleData));
+            registrar.play(CameraGoC2SPacket.ID,CameraGoC2SPacket::new,handler -> handler.server(PayloadHandlers.getInstance()::HandleData));
         }
     }
 

@@ -10,6 +10,8 @@
   "key.mcsm.structure.west": "Move Structure West",
   "key.mcsm.structure.up": "Move Structure Up",
   "key.mcsm.structure.down": "Move Structure Down",
+  "key.mcsm.structure.pos1": "Set Pos 1",
+  "key.mcsm.structure.pos2": "Set Pos 2",
   "key.mcsm.camera.cam_1.set": "Set Camera 1 position",
   "key.mcsm.camera.cam_2.set": "Set Camera 2 position",
   "key.mcsm.camera.cam_3.set": "Set Camera 3 position",
