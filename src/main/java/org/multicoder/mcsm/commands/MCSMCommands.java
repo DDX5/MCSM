@@ -15,6 +15,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import org.multicoder.mcsm.util.NBTUtility;
 
+
+
 public class MCSMCommands
 {
 
@@ -23,6 +25,7 @@ public class MCSMCommands
         dispatcher.register(Commands.literal("mcsm").then(Commands.literal("structure").then(Commands.literal("pos1").executes(MCSMCommands::Pos1)))).createBuilder().build();
         dispatcher.register(Commands.literal("mcsm").then(Commands.literal("structure").then(Commands.literal("pos2").executes(MCSMCommands::Pos2)))).createBuilder().build();
         dispatcher.register(Commands.literal("mcsm").then(Commands.literal("structure").then(Commands.literal("save").then(Commands.argument("name", StringArgumentType.string()).executes(MCSMCommands::Save))))).createBuilder().build();
+        dispatcher.register(Commands.literal("mcsm").then(Commands.literal("structure").then(Commands.literal("select").then(Commands.argument("name", StringArgumentType.string()).executes(MCSMCommands::Select))))).createBuilder().build();
         dispatcher.register(Commands.literal("mcsm").then(Commands.literal("north").then(Commands.argument("name", StringArgumentType.string()).executes(MCSMCommands::MoveNorth)))).createBuilder().build();
         dispatcher.register(Commands.literal("mcsm").then(Commands.literal("east").then(Commands.argument("name", StringArgumentType.string()).executes(MCSMCommands::MoveEast)))).createBuilder().build();
         dispatcher.register(Commands.literal("mcsm").then(Commands.literal("south").then(Commands.argument("name", StringArgumentType.string()).executes(MCSMCommands::MoveSouth)))).createBuilder().build();
@@ -31,6 +34,14 @@ public class MCSMCommands
         dispatcher.register(Commands.literal("mcsm").then(Commands.literal("down").then(Commands.argument("name", StringArgumentType.string()).executes(MCSMCommands::MoveDown)))).createBuilder().build();
         dispatcher.register(Commands.literal("mcsm").then(Commands.literal("camera").then(Commands.argument("number", IntegerArgumentType.integer(0,9)).then(Commands.literal("set").executes(MCSMCommands::SetCamera))))).createBuilder().build();
         dispatcher.register(Commands.literal("mcsm").then(Commands.literal("camera").then(Commands.argument("number", IntegerArgumentType.integer(0,9)).then(Commands.literal("go").executes(MCSMCommands::MoveToCam))))).createBuilder().build();
+    }
+
+    private static int Select(CommandContext<CommandSourceStack> context) throws CommandSyntaxException
+    {
+        ServerPlayer player = context.getSource().getPlayerOrException();
+        String name = StringArgumentType.getString(context,"name");
+        player.getPersistentData().putString("Selected",name);
+        return 0;
     }
 
     private static int SetCamera(CommandContext<CommandSourceStack> context) throws CommandSyntaxException
