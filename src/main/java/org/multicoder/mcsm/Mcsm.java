@@ -1,10 +1,12 @@
 package org.multicoder.mcsm;
 
 import com.mojang.logging.LogUtils;
+import net.minecraft.world.entity.player.Player;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlerEvent;
 import net.neoforged.neoforge.network.registration.IPayloadRegistrar;
 import org.multicoder.mcsm.commands.MCSMCommands;
@@ -32,6 +34,14 @@ public class Mcsm
             LOGGER.info("Registering All Commands");
             MCSMCommands.RegisterCommands(event.getDispatcher());
         }
+        @SubscribeEvent
+        public static void PlayerJoined(PlayerEvent.PlayerLoggedInEvent event){
+            Player player = event.getEntity();
+            if(!player.getPersistentData().contains("camNumber"))
+            {
+                player.getPersistentData().putInt("camNumber",1);
+            }
+        }
     }
     @Mod.EventBusSubscriber(modid = MODID,bus = Mod.EventBusSubscriber.Bus.MOD)
     public static class ModEvents
@@ -39,6 +49,7 @@ public class Mcsm
         @SubscribeEvent
         public static void RegisterPayloads(RegisterPayloadHandlerEvent event)
         {
+            LOGGER.info("Registering All Payloads");
             IPayloadRegistrar registrar = event.registrar("mcsm");
             registrar.play(StructureNorthC2SPacket.ID,StructureNorthC2SPacket::new,handler -> handler.server(PayloadHandlers.getInstance()::HandleData));
             registrar.play(StructureEastC2SPacket.ID,StructureEastC2SPacket::new,handler -> handler.server(PayloadHandlers.getInstance()::HandleData));
@@ -50,7 +61,10 @@ public class Mcsm
             registrar.play(SetPos2C2SPacket.ID,SetPos2C2SPacket::new,handler -> handler.server(PayloadHandlers.getInstance()::HandleData));
             registrar.play(CameraSetC2SPacket.ID,CameraSetC2SPacket::new,handler -> handler.server(PayloadHandlers.getInstance()::HandleData));
             registrar.play(CameraGoC2SPacket.ID,CameraGoC2SPacket::new,handler -> handler.server(PayloadHandlers.getInstance()::HandleData));
+            registrar.play(CameraNextC2SPacket.ID,CameraNextC2SPacket::new,handler -> handler.server(PayloadHandlers.getInstance()::HandleData));
+            registrar.play(CameraPrevC2SPacket.ID,CameraPrevC2SPacket::new,handler -> handler.server(PayloadHandlers.getInstance()::HandleData));
         }
+
     }
 
 }

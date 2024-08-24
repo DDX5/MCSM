@@ -3,6 +3,7 @@ package org.multicoder.mcsm.networking.handlers;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.neoforge.network.handling.PlayPayloadContext;
@@ -74,7 +75,7 @@ public class PayloadHandlers
     public void HandleData(final CameraSetC2SPacket packet, final PlayPayloadContext context)
     {
         ServerPlayer player = (ServerPlayer) context.player().get();
-        int Index = packet.Number();
+        int Index = player.getPersistentData().getInt("camNumber");
         String Key = "Camera" + Index;
         long BlockPos = player.blockPosition().asLong();
         float XRot = player.getXRot();
@@ -84,16 +85,40 @@ public class PayloadHandlers
         NBT.putFloat("pitch",XRot);
         NBT.putFloat("yaw",YRot);
         player.getPersistentData().put(Key,NBT);
+        player.sendSystemMessage(Component.translatable("client.mcsm.cam_set"));
+
     }
     public void HandleData(final CameraGoC2SPacket packet, final PlayPayloadContext context)
     {
         ServerPlayer player = (ServerPlayer) context.player().get();
-        int Index = packet.Number();
+        int Index = player.getPersistentData().getInt("camNumber");
         String Key = "Camera" + Index;
         CompoundTag NBT = player.getPersistentData().getCompound(Key);
         BlockPos position = BlockPos.of(NBT.getLong("pos"));
         float Pitch = NBT.getFloat("pitch");
         float Yaw = NBT.getFloat("yaw");
         player.teleportTo((ServerLevel) context.level().get(),position.getX(),position.getY(),position.getZ(),Yaw,Pitch);
+    }
+    public void HandleData(final CameraPrevC2SPacket packet, final PlayPayloadContext context)
+    {
+        ServerPlayer player = (ServerPlayer) context.player().get();
+        int CamNumber = player.getPersistentData().getInt("camNumber");
+        if(CamNumber != 1)
+        {
+            CamNumber -= 1;
+            player.getPersistentData().putInt("camNumber",CamNumber);
+            player.sendSystemMessage(Component.translatable("client.mcsm.cam",CamNumber));
+        }
+    }
+    public void HandleData(final CameraNextC2SPacket packet, final PlayPayloadContext context)
+    {
+        ServerPlayer player = (ServerPlayer) context.player().get();
+        int CamNumber = player.getPersistentData().getInt("camNumber");
+        if(CamNumber != 27)
+        {
+            CamNumber += 1;
+            player.getPersistentData().putInt("camNumber",CamNumber);
+            player.sendSystemMessage(Component.translatable("client.mcsm.cam",CamNumber));
+        }
     }
 }

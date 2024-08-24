@@ -39,7 +39,10 @@ public class MCSMCommands
         BlockPos Pos2 = BlockPos.of(player.getPersistentData().getLong("pos2"));
         String name = StringArgumentType.getString(context,"name");
         NBTUtility.SaveStructure(Pos1,Pos2,level,player,name);
-        player.sendSystemMessage(Component.literal("Structure " + name + " Saved"));
+        player.getPersistentData().putString("Selected",name);
+        player.getPersistentData().putLong("pos1",0L);
+        player.getPersistentData().putLong("pos2",0L);
+        player.sendSystemMessage(Component.literal("Structure " + name + " Saved And Selected"));
         return 0;
     }
 }

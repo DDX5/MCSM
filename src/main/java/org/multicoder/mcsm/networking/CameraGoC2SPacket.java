@@ -6,21 +6,18 @@ import net.minecraft.resources.ResourceLocation;
 import org.multicoder.mcsm.Mcsm;
 
 @SuppressWarnings("all")
-public record CameraGoC2SPacket(int Number) implements CustomPacketPayload
+public record CameraGoC2SPacket() implements CustomPacketPayload
 {
 
     public static final ResourceLocation ID = new ResourceLocation(Mcsm.MODID,"camera_go");
 
     public CameraGoC2SPacket(FriendlyByteBuf buf)
     {
-        this(buf.readInt());
+        this();
     }
 
     @Override
-    public void write(FriendlyByteBuf friendlyByteBuf)
-    {
-        friendlyByteBuf.writeInt(Number());
-    }
+    public void write(FriendlyByteBuf friendlyByteBuf) {}
 
     @Override
     public ResourceLocation id() {
